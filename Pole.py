@@ -8,16 +8,19 @@ class Pole:
         if self.top is not None:
             if self.top.radius > disc.radius:
                 self.top = disc.putOnTopOf(self.top)
+                return True
             else:
                 return False
         else:
             self.top = disc
             self.base = disc
+            return True
 
     def removeDisc(self):
         if self.top is not None:
             removedDisc = self.top
             self.top = self.top.under
+            removedDisc.under = None
             return removedDisc
         else:
             return None
