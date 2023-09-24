@@ -26,7 +26,7 @@ class Pole:
             return None
 
     def height(self):
-        return self.top.height() if self.top is not None else 1
+        return self.top.height() if self.top is not None else 0
 
     def asList(self):
         return self.top.asList() if self.top is not None else []
