@@ -31,7 +31,7 @@ class Pole:
     def asList(self):
         return self.top.asList() if self.top is not None else []
 
-    def graphicalRepresentation(self):
-        return self.top.graphicalRepresentation(self.base.radius) if self.top is not None else ""
+    def graphicalRepresentation(self, baseRadius):
+        return self.top.graphicalRepresentation(baseRadius) if self.top is not None else '+╩+'.replace('+','═'*(baseRadius+1))
 
 

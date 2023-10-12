@@ -71,22 +71,26 @@ testPole(pole2, 2, disc5, disc11, [disc5.radius, disc11.radius])
 
 # introducing the mighty POLE ORCHESTRATOR
 # we'll instantiate one with 3 poles and 10 discs
-poleOrchestrator = PoleOrchestrator(3, 10)
+game = PoleOrchestrator(3, 10)
 # this pole orchestrator will control 3 poles, and put 10 discs on the first one
-assert len(poleOrchestrator.poles) == 3
-testPole(poleOrchestrator.poles[0], 10, Disc(1), Disc(10), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-testPole(poleOrchestrator.poles[1], 0, None, None, [])
-testPole(poleOrchestrator.poles[2], 0, None, None, [])
+assert len(game.poles) == 3
+testPole(game.poles[0], 10, Disc(1), Disc(10), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+testPole(game.poles[1], 0, None, None, [])
+testPole(game.poles[2], 0, None, None, [])
 
-for i in range(0,3):
-    print("Pole " + str(i+1))
-    print(poleOrchestrator.pole(i).graphicalRepresentation())
+# let's play the game for a bit
 
-poleOrchestrator.pole(1).addDisc(poleOrchestrator.pole(0).removeDisc())
-poleOrchestrator.pole(2).addDisc(poleOrchestrator.pole(0).removeDisc())
-poleOrchestrator.pole(2).addDisc(poleOrchestrator.pole(1).removeDisc())
-poleOrchestrator.pole(1).addDisc(poleOrchestrator.pole(0).removeDisc())
+game.moveDisc(0, 1)
+game.moveDisc(0, 2)
+game.moveDisc(1, 2)
+game.moveDisc(0, 1)
+game.moveDisc(2, 0)
+game.moveDisc(2, 1)
+game.moveDisc(0, 1)
+game.moveDisc(0, 2)
 
-for i in range(0,3):
-    print("Pole " + str(i+1))
-    print(poleOrchestrator.pole(i).graphicalRepresentation())
+# now check that we've done everything correctly
+
+testPole(game.poles[0], 6, Disc(5), Disc(10), [5, 6, 7, 8, 9, 10])
+testPole(game.poles[1], 3, Disc(1), Disc(3), [1, 2, 3])
+testPole(game.poles[2], 1, Disc(4), Disc(4), [4])
