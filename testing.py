@@ -1,15 +1,24 @@
 from Disc import Disc
 from Pole import Pole
+from PoleOrchestrator import PoleOrchestrator
 
 def testPole(pole, height, top, base, list):
     assert pole.height() == height, "Pole height " + str(pole.height()) + " ≠ " + str(height)
-    assert pole.top == top, "Pole top " + str(pole.top.radius) + " ≠ " + str(top.radius)
-    assert pole.base == base, "Pole base " + str(pole.base.radius) + " ≠ " + str(base.radius)
+
+    if top is None:
+        assert pole.top is None, "Top should be none, instead " + str(pole.top.radius)
+    else:
+        assert pole.top.radius == top.radius, "Pole top " + str(pole.top.radius) + " ≠ " + str(top.radius)
+
+    if base is None:
+        assert pole.base is None, "Base should be none, instead " + str(pole.base.radius)
+    else:
+        assert pole.base.radius == base.radius, "Pole base " + str(pole.base.radius) + " ≠ " + str(base.radius)
+
     assert pole.asList() == list, "Pole list " + str(pole.asList()) + " ≠ " + str(list)
 
 def testDisc(disc, radius):
     assert disc.radius == radius
-    assert disc.graphicalRepresentation(0) == '|*-*|\n'.replace('*', '-'*radius)
 
 # Instantiating a pole
 pole = Pole()
@@ -60,5 +69,24 @@ assert pole2.addDisc(pole.removeDisc()) is True
 testPole(pole, 1, disc9, disc9, [disc9.radius])
 testPole(pole2, 2, disc5, disc11, [disc5.radius, disc11.radius])
 
+# introducing the mighty POLE ORCHESTRATOR
+# we'll instantiate one with 3 poles and 10 discs
+poleOrchestrator = PoleOrchestrator(3, 10)
+# this pole orchestrator will control 3 poles, and put 10 discs on the first one
+assert len(poleOrchestrator.poles) == 3
+testPole(poleOrchestrator.poles[0], 10, Disc(1), Disc(10), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+testPole(poleOrchestrator.poles[1], 0, None, None, [])
+testPole(poleOrchestrator.poles[2], 0, None, None, [])
 
+for i in range(0,3):
+    print("Pole " + str(i+1))
+    print(poleOrchestrator.pole(i).graphicalRepresentation())
 
+poleOrchestrator.pole(1).addDisc(poleOrchestrator.pole(0).removeDisc())
+poleOrchestrator.pole(2).addDisc(poleOrchestrator.pole(0).removeDisc())
+poleOrchestrator.pole(2).addDisc(poleOrchestrator.pole(1).removeDisc())
+poleOrchestrator.pole(1).addDisc(poleOrchestrator.pole(0).removeDisc())
+
+for i in range(0,3):
+    print("Pole " + str(i+1))
+    print(poleOrchestrator.pole(i).graphicalRepresentation())

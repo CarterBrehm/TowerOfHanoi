@@ -21,6 +21,6 @@ class Disc:
 
     def graphicalRepresentation(self, baseRadius):
         if self.under is None:
-            return '_|*-*|\n'.replace('*', '-'*self.radius).replace('_',' '*(baseRadius - self.radius))
+            return '_|*┃*|\n+╩+'.replace('*', '─'*self.radius).replace('_',' '*(baseRadius - self.radius)).replace('+','═'*(baseRadius+1))
         else:
-            return '_|*-*|\n'.replace('*', '-'*self.radius).replace('_',' '*(baseRadius - self.radius)) + self.under.graphicalRepresentation(baseRadius)
+            return '_|*┃*|\n'.replace('*', '─'*self.radius).replace('_',' '*(baseRadius - self.radius)) + self.under.graphicalRepresentation(baseRadius)
